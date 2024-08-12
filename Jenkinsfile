@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'ansible-7'
+        label 'ansible-controller'
     }
     stages {
         stage('Preparation') {
@@ -11,8 +11,8 @@ pipeline {
                         env.INVENTORY = 'ansible/inventories/dev/host.ini'
                     } else if (env.BRANCH_NAME == 'staging') {
                         env.INVENTORY = 'ansible/inventories/staging/host.ini'
-                    } else if (env.BRANCH_NAME == 'prod') {
-                        env.INVENTORY = 'ansible/inventories/prod/host.ini'
+                    } else if (env.BRANCH_NAME == 'main') {
+                        env.INVENTORY = 'ansible/inventories/main/host.ini'
                     }
                 }
                 echo "Using inventory: ${env.INVENTORY}"
@@ -42,7 +42,7 @@ pipeline {
         stage('Run Playbook') {
             steps {
                 sh """
-                ansible-playbook -i ~/${env.INVENTORY} ~/ansible/playbook/main.yml --ssh-extra-args='-o StrictHostKeyChecking=no'
+                ansible-playbook -i ~/${env.INVENTORY} ~/ansible/playbook/playbook.yml --ssh-extra-args='-o StrictHostKeyChecking=no'
                 """
             }
         }
