@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'ansible-controller'
+        label 'ansible-7'
     }
     stages {
         stage('Preparation') {
