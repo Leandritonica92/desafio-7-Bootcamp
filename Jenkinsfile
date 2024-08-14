@@ -18,6 +18,12 @@ pipeline {
                 echo "Using inventory: ${env.INVENTORY}"
             }
         }
+        stage('Check User') {
+            steps {
+                sh 'whoami'
+                sh 'ls -la /home/jenkins/.ssh/id_ed25519'
+            }
+        }
         stage('Checkout') {
             steps {
                 checkout scm
@@ -37,6 +43,14 @@ pipeline {
                     sh 'cp ${WORKSPACE}/ansible/inventories/main/host.ini ~/ansible/inventories/main/'
                     sh 'cp ${WORKSPACE}/ansible/playbook/playbook.yml ~/ansible/playbook/'
                 }
+            }
+        }
+        stage('Debug') {
+            steps {
+                sh 'ls -la /home/jenkins/ansible/inventories/staging'
+                sh 'cat /home/jenkins/ansible/inventories/staging/host.ini'
+                sh 'ls -la /home/jenkins/ansible/playbook'
+                sh 'cat /home/jenkins/ansible/playbook/playbook.yml'
             }
         }
         stage('Run Playbook') {
