@@ -42,7 +42,7 @@ pipeline {
         stage('Run Playbook') {
             steps {
                 sh """
-                ansible-playbook -i ~/${env.INVENTORY} ~/ansible/playbook/playbook.yml --ssh-extra-args='-o StrictHostKeyChecking=no'
+                ansible-playbook -i /home/jenkins/ansible/inventories/staging/host.ini /home/jenkins/ansible/playbook/playbook.yml -u ubuntu --private-key /home/jenkins/.ssh/id_ed25519 --ssh-extra-args="-o StrictHostKeyChecking=no'
                 """
             }
         }
