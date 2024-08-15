@@ -6,7 +6,7 @@ pipeline {
         stage('Print Environment Variables') {
             steps {
                 script {
-                    // Imprimir todas las variables de entorno
+                    // Imprimir todas las variables de entornoo
                     env.each { key, value ->
                         echo "${key} = ${value}"
                     }
