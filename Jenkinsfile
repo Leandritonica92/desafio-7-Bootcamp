@@ -18,12 +18,6 @@ pipeline {
                 echo "Using inventory: ${env.INVENTORY}"
             }
         }
-        stage('Check User') {
-            steps {
-                sh 'whoami'
-                sh 'ls -la /home/jenkins/.ssh/id_ed25519'
-            }
-        }
         stage('Checkout') {
             steps {
                 checkout scm
@@ -45,18 +39,10 @@ pipeline {
                 }
             }
         }
-        stage('Debug') {
-            steps {
-                sh 'ls -la /home/jenkins/ansible/inventories/staging'
-                sh 'cat /home/jenkins/ansible/inventories/staging/host.ini'
-                sh 'ls -la /home/jenkins/ansible/playbook'
-                sh 'cat /home/jenkins/ansible/playbook/playbook.yml'
-            }
-        }
         stage('Run Playbook') {
             steps {
                 sh """
-                ansible-playbook -i ${env.INVENTORY} /home/jenkins/ansible/playbook/playbook.yml -u ubuntu --private-key /home/jenkins/.ssh/id_ed25519 --ssh-extra-args="-o StrictHostKeyChecking=no"
+                ansible-playbook -i ~/${env.INVENTORY} ~/ansible/playbook/playbook.yml --ssh-extra-args='-o StrictHostKeyChecking=no'
                 """
             }
         }
