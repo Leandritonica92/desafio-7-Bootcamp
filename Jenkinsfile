@@ -3,20 +3,6 @@ pipeline {
         label 'ansible-controller'
     }
     stages {
-        stage('Print Environment Variables') {
-            steps {
-                script {
-<<<<<<< HEAD
-                    // Imprimir todas las variables de entornoo
-=======
-                    // Imprimir todas las variables de entorno
->>>>>>> 997e1625336868aed2a08480e46148d44d2f6aa7
-                    env.each { key, value ->
-                        echo "${key} = ${value}"
-                    }
-                }
-            }
-        }
         stage('Preparation') {
             steps {
                 script {
